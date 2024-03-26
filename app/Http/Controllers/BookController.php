@@ -36,7 +36,7 @@ class BookController extends Controller
 
             return response()->json(['message' => 'Book created successfully'], 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -71,7 +71,7 @@ class BookController extends Controller
 
             return response()->json(['message' => 'Book updated successfully'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -92,7 +92,7 @@ class BookController extends Controller
 
             return response()->json(['message' => 'Book deleted successfully'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -103,7 +103,7 @@ class BookController extends Controller
 
             return response()->json($books, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -122,7 +122,7 @@ class BookController extends Controller
 
             return response()->json($book, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 }

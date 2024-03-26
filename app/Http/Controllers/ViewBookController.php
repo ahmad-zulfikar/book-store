@@ -23,7 +23,7 @@ class ViewBookController extends Controller
 
     public function listBooks()
     {
-        return view('list-books');
+        return view('list-book');
     }
 
     public function changePassword()

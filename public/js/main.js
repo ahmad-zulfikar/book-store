@@ -11,6 +11,14 @@ $(document).ready(function () {
                 localStorage.setItem("access_token", data.access_token);
                 window.location.href = "/home";
             },
+            //on error, display the error message
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
+            },
             cache: false,
             contentType: false,
             processData: false,
@@ -30,6 +38,13 @@ $(document).ready(function () {
             },
             success: function (data) {
                 window.location.href = "/home";
+            },
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
             },
             cache: false,
             contentType: false,
@@ -58,6 +73,13 @@ $(document).ready(function () {
                 );
             });
         },
+        error: function (data) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data.responseJSON.message,
+            });
+        },
     });
 
     //onchange of #book-dropdown, fill the form with the book details
@@ -75,6 +97,13 @@ $(document).ready(function () {
                 $("#edit-book input[name=author]").val(data.author);
                 $("#edit-book input[name=isbn]").val(data.isbn);
                 $("#edit-book input[name=year]").val(data.year);
+            },
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
             },
         });
     });
@@ -96,6 +125,13 @@ $(document).ready(function () {
             success: function (data) {
                 window.location.href = "/home";
             },
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
+            },
             cache: false,
             contentType: false,
             processData: false,
@@ -103,5 +139,87 @@ $(document).ready(function () {
     });
 
     //#delete-book form, on submit
-    
+    //send delete method with id as parameter
+    $("#delete-book").submit(function (e) {
+        e.preventDefault();
+        var book_id = $("#book-dropdown").val();
+        $.ajax({
+            url: "/api/delete-book/?id=" + book_id,
+            type: "DELETE",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            success: function (data) {
+                window.location.href = "/home";
+            },
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
+            },
+        });
+    });
+
+    $.ajax({
+        url: "/api/list-book",
+        type: "GET",
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+        success: function (data) {
+            //but in tbody of #book-table
+            var table = $("#book-table tbody");
+            table.empty();
+            $.each(data, function (key, entry) {
+                table.append(
+                    "<tr><td>" +
+                        entry.title +
+                        "</td><td>" +
+                        entry.author +
+                        "</td><td>" +
+                        entry.isbn +
+                        "</td><td>" +
+                        entry.year +
+                        "</td></tr>"
+                );
+            });
+        },
+        error: function (data) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data.responseJSON.message,
+            });
+        },
+    });
+
+    //change password
+    $("#change-password").submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: "/api/change-password",
+            type: "POST",
+            data: formData,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            success: function (data) {
+                window.location.href = "/home";
+            },
+            //on error, display the error message #notif
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+    });
 });

@@ -29,7 +29,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -91,16 +91,17 @@ class AuthController extends Controller
         $validation = Validator::make($request->all(), [
             'old_password' => 'required|string',
             'new_password' => 'required|string',
+            'confirm_password' => 'required|string|same:new_password',
         ]);
 
         if ($validation->fails()) {
-            return response()->json($validation->errors(), 400);
+            return response()->json(['message' => $validation->errors()->first()], 400);
         }
 
         $user = User::find(auth()->user()->id);
 
         if (!password_verify($request->old_password, $user->password)) {
-            return response()->json(['error' => 'Old password is incorrect'], 400);
+            return response()->json(['message' => 'Old password is incorrect'], 400);
         }
 
         $user->password = bcrypt($request->new_password);

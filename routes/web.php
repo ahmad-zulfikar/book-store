@@ -5,6 +5,7 @@ use App\Http\Controllers\ViewBookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
+Route::get('/login', [IndexController::class, 'index']);
 
 Route::get('/home', [IndexController::class, 'home']);
 Route::get('/create-book', [ViewBookController::class, 'createBook'])->name('create-book');
