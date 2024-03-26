@@ -53,5 +53,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Logout</h5>
+                    <p class="card-text">Logout from your account</p>
+                    <button class="btn btn-primary" id="logout">Logout</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -209,7 +209,7 @@ $(document).ready(function () {
             success: function (data) {
                 window.location.href = "/home";
             },
-            //on error, display the error message #notif
+            //on error, display the error message
             error: function (data) {
                 Swal.fire({
                     icon: "error",
@@ -220,6 +220,27 @@ $(document).ready(function () {
             cache: false,
             contentType: false,
             processData: false,
+        });
+    });
+
+    $("#logout").click(function () {
+        $.ajax({
+            url: "/api/logout",
+            type: "GET",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            success: function (data) {
+                localStorage.removeItem("access_token");
+                window.location.href = "/";
+            },
+            error: function (data) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: data.responseJSON.message,
+                });
+            },
         });
     });
 });
